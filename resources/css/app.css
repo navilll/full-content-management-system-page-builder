@@ -1,0 +1,159 @@
+.attachments {
+    width: 100px !important;
+    height: 100px !important;
+    box-shadow: 1px 5px 9px 0px #00000082;
+    object-fit: contain !important;
+    border-radius: 6px;
+    margin: 5px;
+    ;
+}
+
+.user-image {
+    width: 150px !important;
+    height: 150px !important;
+    box-shadow: 1px 5px 9px 0px #00000082;
+    object-fit: contain !important;
+    border-radius: 6px;
+    margin: 5px;
+    ;
+}
+
+.description-cell {
+    max-width: 400px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.menu .app-brand.demo {
+    height: 90px;
+    margin-top: 12px;
+}
+
+.my-table {
+  width: 100%;
+  table-layout: fixed;        /* forces cells to respect width limits */
+  border-collapse: collapse;
+}
+
+.my-table td, 
+.my-table th {
+  word-wrap: break-word;      /* breaks long words or links */
+  white-space: normal;        /* allows wrapping */
+  overflow: hidden;           /* hides anything that still overflows */
+  text-overflow: ellipsis;    /* adds ... if too long */
+  vertical-align: middle;
+  max-width: 250px;           /* optional: limit each column’s width */
+}
+
+.my-table img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.page-builder-container {
+  background: #fff;
+  min-height: 100vh;
+}
+.card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+.dynamic-zone-container {
+  background: #f6f6f9;
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+.section-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.section-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.section-card.dragging {
+  opacity: 0.5;
+}
+.section-header {
+  background: rgba(102, 126, 234, 0.05);
+  border-bottom: 1px solid #e5e7eb;
+}
+.item-card {
+  background: rgba(241, 245, 249, 0.5);
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.item-card:hover {
+  background: rgba(241, 245, 249, 0.8);
+}
+.item-card.dragging {
+  opacity: 0.5;
+}
+.component-picker-card {
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+}
+.component-picker-header {
+  background: rgba(102, 126, 234, 0.1);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+.component-btn {
+  border: 2px dashed #cbd5e1;
+  transition: all 0.3s ease;
+  min-height: 100px;
+}
+.component-btn:hover {
+  border-color: #667eea;
+  border-style: solid;
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateY(-2px);
+}
+.btn-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+}
+.btn-gradient:hover {
+  opacity: 0.9;
+  color: white;
+}
+.drag-handle {
+  cursor: grab;
+}
+.drag-handle:active {
+  cursor: grabbing;
+}
+.badge-count {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+.preview-image {
+  max-height: 100px;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.position-badge {
+  background: #6c757d;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+}
+.item-position-badge {
+  background: #495057;
+  color: white;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 8px;
+}

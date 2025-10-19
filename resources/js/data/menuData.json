@@ -1,0 +1,111 @@
+[
+    {
+        "header": "",
+        "items": [
+            {
+                "text": "Dashboard",
+                "icon": "bx bx-home",
+                "available": true,
+                "link": "dashboard"
+            }
+        ]
+    },
+    {
+        "header": "",
+        "items": [
+            {
+                "text": "Manage Sections",
+                "icon": "bx bx-category",
+                "available": true,
+                "link": "",
+                "submenu": [
+                    {
+                        "text": "Banners",
+                        "available": true,
+                        "link": "banners.index"
+                    },
+                    {
+                        "text": "Testimonials",
+                        "available": true,
+                        "link": "testimonial.index"
+                    },
+                    {
+                        "text": "Happenings",
+                        "available": true,
+                        "link": "happening.index"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "header": "",
+        "items": [
+            {
+                "text": "Galleries",
+                "icon": "bx bx-image",
+                "available": true,
+                "link": "galleries.index"
+            }
+        ]
+    },
+    {
+        "header": "",
+        "items": [
+            {
+                "text": "Manage School",
+                "icon": "bx bx-buildings",
+                "available": true,
+                "link": "",
+                "submenu": [
+                    {
+                        "text": "School",
+                        "available": true,
+                        "link": "schools.index"
+                    },
+                    {
+                        "text": "Departments",
+                        "available": true,
+                        "link": "department.index"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "header": "",
+        "items": [
+            {
+                "text": "Manage Content",
+                "icon": "bx bx-notepad",
+                "available": true,
+                "link": "",
+                "submenu": [
+                    {
+                        "text": "Pages",
+                        "available": true,
+                        "link": "pages.index"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "header": "Settings",
+        "items": [
+            {
+                "text": "Profile Settings",
+                "icon": "bx bx-cog",
+                "available": true,
+                "link": "",
+                "submenu": [
+                    {
+                        "text": "Update Profile",
+                        "available": true,
+                        "link": "profile.edit"
+                    }
+                ]
+            }
+        ]
+    }
+]
