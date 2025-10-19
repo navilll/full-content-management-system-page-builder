@@ -490,7 +490,7 @@ const PageBuilder = () => {
                                         )}
                                         <input
                                           type="file"
-                                          className="form-control form-control-sm"
+                                          className="form-control "
                                           accept="image/*"
                                           onChange={(e) => {
                                             const file = e.target.files?.[0];
@@ -503,7 +503,7 @@ const PageBuilder = () => {
                                     ) : (
                                       <input
                                         type={field.type}
-                                        className="form-control form-control-sm"
+                                        className="form-control"
                                         value={item[field.name] || ""}
                                         onChange={(e) => handleFieldChange(sIndex, iIndex, field.name, e.target.value)}
                                         placeholder={field.placeholder}
@@ -604,7 +604,7 @@ const PageBuilder = () => {
             ) : (
               <>
                 <Save size={16} className="me-2" />
-                Save
+                Save All Changes
               </>
             )}
           </button>

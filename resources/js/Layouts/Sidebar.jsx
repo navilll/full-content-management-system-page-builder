@@ -12,19 +12,20 @@ const Sidebar = () => {
                 <Link aria-label='Navigate to sneat homepage' href={route('dashboard')} className="app-brand-link">
                     <span
                         className="app-brand-logo demo"
-                        style={{
-                            backgroundColor: '#cccccc', // light grey
-                            padding: '8px',
-                            borderRadius: '6px'
-                        }}
                         >
                         <img
                             src={appLogo}
                             alt="sneat-logo"
-                            style={{ width: '190px', height: 'auto' }}
+                            style={{ width: 'auto', height: '60px', borderRadius: '8px' }}
                         />
                     </span>
-                    {/* <span className="app-brand-text demo menu-text fw-bold ms-2">JSS Noida</span> */}
+                    <span 
+                        className="app-brand-text demo menu-text fw-bold ms-2"  
+                        style={{ fontSize: "45px", fontFamily: "'Nasalization', sans-serif", color: "#384551" }}
+                        >
+                        NAVIL
+                    </span>
+
                 </Link>
 
                 <a href="#" className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">

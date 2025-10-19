@@ -32,14 +32,12 @@ class PageSectionController extends Controller
 
                         $content['id'] = $item->id;
                         
-                        // Set default position if not exists
                         if (!isset($content['position']) || !is_numeric($content['position'])) {
                             $content['position'] = 999;
                         }
                         
                         return $content;
                     } catch (\Exception $e) {
-                        // Fallback for invalid content
                         return [
                             'id' => $item->id,
                             'position' => 999,
@@ -48,7 +46,6 @@ class PageSectionController extends Controller
                     }
                 });
                 
-                // Sort by position and reset array keys
                 $sortedItems = $items->sortBy('position')->values()->toArray();
 
                 return [
@@ -76,7 +73,6 @@ class PageSectionController extends Controller
 
         $allSectionGroups = [];
         
-        // Handle new sections
         foreach ($sections as $sIndex => $section) {
             $sectionType = $section['section_name'] ?? null;
             $items = $section['items'] ?? [];
@@ -91,7 +87,6 @@ class PageSectionController extends Controller
                 $content = $this->buildContent($request, $item, $sectionType, $sIndex, $iIndex);
                 $itemPosition = $item['position'] ?? ($iIndex + 1);
 
-                // Add position to content
                 $content['position'] = $itemPosition;
 
                 PageSection::create([
@@ -104,7 +99,6 @@ class PageSectionController extends Controller
             }
         }
 
-        // Process existing sections and update their positions
         foreach ($existing as $sIndex => $section) {
             $sectionType = $section['section_name'] ?? null;
             $groupKey = $section['group_key'] ?? null;
@@ -115,23 +109,18 @@ class PageSectionController extends Controller
 
             $allSectionGroups[$groupKey] = $sectionPosition;
 
-            // Update individual item positions for existing items
             foreach ($items as $iIndex => $item) {
                 $itemPosition = $item['position'] ?? ($iIndex + 1);
                 
-                // In the existing items update section:
                 if (isset($item['id'])) {
-                    // Update existing item
                     $existingItem = PageSection::where('id', $item['id'])->first();
                     if ($existingItem) {
                         $existingContent = is_array($existingItem->content) 
                             ? $existingItem->content 
                             : json_decode($existingItem->content, true);
                         
-                        // Update the item position in content
                         $existingContent['position'] = $itemPosition;
                         
-                        // Build content with file handling for existing items
                         $updatedContent = $this->buildContent($request, $item, $sectionType, $sIndex, $iIndex, true, $existingContent);
                         
                         $existingItem->update([
@@ -140,11 +129,9 @@ class PageSectionController extends Controller
                         ]);
                     }
                 } else {
-                    // Add new item to existing section
                     $content = $this->buildContent($request, $item, $sectionType, $sIndex, $iIndex, true);
                     $itemPosition = $item['position'] ?? ($iIndex + 1);
 
-                    // Add position to content
                     $content['position'] = $itemPosition;
 
                     PageSection::create([
@@ -158,7 +145,6 @@ class PageSectionController extends Controller
             }
         }
 
-        // Now update ALL section positions based on the order they were sent
         foreach ($allSectionGroups as $groupKey => $newPosition) {
             PageSection::where('group_key', $groupKey)
                 ->update(['position' => $newPosition]);
@@ -173,7 +159,6 @@ class PageSectionController extends Controller
     {
         $content = $existingContent ?: [];
 
-        // Update text fields
         foreach ($item as $field => $value) {
             if (!is_array($value) && !$value instanceof \Illuminate\Http\UploadedFile) {
                 $content[$field] = $value;
@@ -190,15 +175,12 @@ class PageSectionController extends Controller
             $file = $request->file("{$basePath}.{$field}");
 
             if ($file instanceof \Illuminate\Http\UploadedFile) {
-                // Delete old file if it exists (for existing items)
                 if (!empty($content[$field]) && !empty($existingContent)) {
                     $this->deleteImageFromDisk($content[$field]);
                 }
                 
-                // Upload new file
                 $content[$field] = $this->moveImage($file, $type);
             } elseif (is_array($file)) {
-                // Handle multiple files
                 $oldFiles = $content[$field] ?? [];
                 if (is_array($oldFiles) && !empty($existingContent)) {
                     foreach ($oldFiles as $oldFile) {
@@ -208,7 +190,6 @@ class PageSectionController extends Controller
                 
                 $content[$field] = array_map(fn($f) => $this->moveImage($f, $type), $file);
             } elseif (empty($content[$field]) && isset($existingContent[$field])) {
-                // Keep existing file if no new file uploaded and we have existing content
                 $content[$field] = $existingContent[$field];
             }
         }
@@ -220,7 +201,7 @@ class PageSectionController extends Controller
 
     private function moveImage(UploadedFile $file, string $type)
     {
-        $folder = "assets/img/{$type}s/";
+        $folder = "assets/img/{$type}/";
         $path = public_path($folder);
 
         if (!File::exists($path)) {
@@ -317,62 +298,5 @@ class PageSectionController extends Controller
         $section->delete();
 
         return back()->with('success', 'Item Deleted successfully!');
-    }
-
-
-    public function updateItem(Request $request)
-    {
-        $request->validate([
-            'item.item_uuid' => 'required',
-            'page_id' => 'required|exists:pages,id',
-        ]);
-
-        $itemUuid = $request->input('item.item_uuid');
-        $pageId = $request->input('page_id');
-        $item = $request->input('item');
-        $files = $request->allFiles();
-
-        $section = PageSection::where('page_id', $pageId)
-            ->whereJsonContains('content->item_uuid', $itemUuid)
-            ->first();
-
-        if (!$section) {
-            return back()->with('error', 'Item not found!');
-        }
-
-        $oldContent = is_array($section->content)
-            ? $section->content
-            : json_decode($section->content, true);
-
-        $fileFields = ['file', 'file_mobile', 'video', 'icon', 'photo'];
-
-        foreach ($fileFields as $field) {
-            if (isset($files['item'][$field])) {
-                if (!empty($oldContent[$field])) {
-                    $oldFiles = is_array($oldContent[$field])
-                        ? $oldContent[$field]
-                        : [$oldContent[$field]];
-
-                    foreach ($oldFiles as $oldFileUrl) {
-                        $this->deleteImageFromDisk($oldFileUrl);
-                    }
-                }
-
-                $uploaded = $files['item'][$field];
-                if (is_array($uploaded)) {
-                    $item[$field] = array_map(fn($f) => $this->moveImage($f, $section->section_type), $uploaded);
-                } else {
-                    $item[$field] = $this->moveImage($uploaded, $section->section_type);
-                }
-            } else {
-                $item[$field] = $oldContent[$field] ?? null;
-            }
-        }
-        
-        $section->update(['content' => $item]);
-
-        return redirect()
-            ->route('sections.index', $request->page_id)
-            ->with('success', 'Item Updated Successfully!');
     }
 }

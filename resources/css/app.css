@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Nasalization';
+  src: url('../../../../assets/nasalization-rg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .attachments {
     width: 100px !important;
     height: 100px !important;
